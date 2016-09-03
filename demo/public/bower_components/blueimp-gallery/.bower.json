@@ -10,6 +10,5 @@
   },
   "_source": "https://github.com/blueimp/Gallery.git",
   "_target": "^2.21.3",
-  "_originalSource": "blueimp-gallery",
-  "_direct": true
+  "_originalSource": "blueimp-gallery"
 }

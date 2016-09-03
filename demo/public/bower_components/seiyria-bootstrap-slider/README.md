@@ -2,9 +2,9 @@ bootstrap-slider [![Build Status](https://travis-ci.org/seiyria/bootstrap-slider
 ================
 Originally began as a loose "fork" of bootstrap-slider found on http://www.eyecon.ro/ by Stefan Petre.
 
-Over time, this project has diverged sigfinicantly from Stefan Petre's version and is now almost completly different.
+Over time, this project has diverged sigfinicantly from Stefan Petre's version and is now almost completely different.
 
-__Please ensure that you are using this library instead of the Petre version before creating issues in the repository Issue tracker!!__
+__Please ensure that you are using this library instead of the Petre version before creating issues in the repository issue tracker!!__
 
 Installation
 ============
@@ -196,6 +196,7 @@ Options can be passed either as a data (data-slider-foo) attribute, or as part o
 | scale | string | 'linear' | Set to 'logarithmic' to use a logarithmic scale. |
 | focus | bool | false | Focus the appropriate slider handle after a value change. |
 | labelledby | string,array | null | ARIA labels for the slider handle's, Use array for multiple values in a range slider. |
+| rangeHighlights | array | [] | Defines a range array that you want to highlight, for example: [{'start':val1, 'end': val2}]. |
 
 Functions
 =========

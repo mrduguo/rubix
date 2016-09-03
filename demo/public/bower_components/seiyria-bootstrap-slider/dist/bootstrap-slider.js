@@ -1,5 +1,5 @@
 /*! =======================================================
-                      VERSION  9.1.1              
+                      VERSION  9.2.0              
 ========================================================= */
 "use strict";
 
@@ -36,6 +36,7 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
  * v1.0.1
  * MIT license
  */
+var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(window)) === "object";
 
 (function (factory) {
 	if (typeof define === "function" && define.amd) {
@@ -57,13 +58,13 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
 	var NAMESPACE_ALTERNATE = 'bootstrapSlider';
 
 	// Polyfill console methods
-	if (!window.console) {
+	if (windowIsDefined && !window.console) {
 		window.console = {};
 	}
-	if (!window.console.log) {
+	if (windowIsDefined && !window.console.log) {
 		window.console.log = function () {};
 	}
-	if (!window.console.warn) {
+	if (windowIsDefined && !window.console.warn) {
 		window.console.warn = function () {};
 	}
 
@@ -432,6 +433,19 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
 				sliderTrack.appendChild(sliderTrackSelection);
 				sliderTrack.appendChild(sliderTrackHigh);
 
+				/* Create highlight range elements */
+				this.rangeHighlightElements = [];
+				if (Array.isArray(this.options.rangeHighlights) && this.options.rangeHighlights.length > 0) {
+					for (var j = 0; j < this.options.rangeHighlights.length; j++) {
+
+						var rangeHighlightElement = document.createElement("div");
+						rangeHighlightElement.className = "slider-rangeHighlight slider-selection";
+
+						this.rangeHighlightElements.push(rangeHighlightElement);
+						sliderTrack.appendChild(rangeHighlightElement);
+					}
+				}
+
 				/* Add aria-labelledby to handle's */
 				var isLabelledbyArray = Array.isArray(this.options.labelledby);
 				if (isLabelledbyArray && this.options.labelledby[0]) {
@@ -753,7 +767,8 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
 				scale: 'linear',
 				focus: false,
 				tooltip_position: null,
-				labelledby: null
+				labelledby: null,
+				rangeHighlights: []
 			},
 
 			getElement: function getElement() {
@@ -1007,6 +1022,28 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
 				this.handle2.style[this.stylePos] = positionPercentages[1] + '%';
 				this.handle2.setAttribute('aria-valuenow', this._state.value[1]);
 
+				/* Position highlight range elements */
+				if (this.rangeHighlightElements.length > 0 && Array.isArray(this.options.rangeHighlights) && this.options.rangeHighlights.length > 0) {
+					for (var _i = 0; _i < this.options.rangeHighlights.length; _i++) {
+						var startPercent = this._toPercentage(this.options.rangeHighlights[_i].start);
+						var endPercent = this._toPercentage(this.options.rangeHighlights[_i].end);
+
+						var currentRange = this._createHighlightRange(startPercent, endPercent);
+
+						if (currentRange) {
+							if (this.options.orientation === 'vertical') {
+								this.rangeHighlightElements[_i].style.top = currentRange.start + "%";
+								this.rangeHighlightElements[_i].style.height = currentRange.size + "%";
+							} else {
+								this.rangeHighlightElements[_i].style.left = currentRange.start + "%";
+								this.rangeHighlightElements[_i].style.width = currentRange.size + "%";
+							}
+						} else {
+							this.rangeHighlightElements[_i].style.display = "none";
+						}
+					}
+				}
+
 				/* Position ticks and labels */
 				if (Array.isArray(this.options.ticks) && this.options.ticks.length > 0) {
 
@@ -1168,6 +1205,22 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
 							this.tooltip_max.style.top = this.tooltip_min.style.top;
 						}
 					}
+				}
+			},
+			_createHighlightRange: function _createHighlightRange(start, end) {
+				if (this._isHighlightRange(start, end)) {
+					if (start > end) {
+						return { 'start': end, 'size': start - end };
+					}
+					return { 'start': start, 'size': end - start };
+				}
+				return null;
+			},
+			_isHighlightRange: function _isHighlightRange(start, end) {
+				if (0 <= start && start <= 100 && 0 <= end && end <= 100) {
+					return true;
+				} else {
+					return false;
 				}
 			},
 			_resize: function _resize(ev) {
@@ -1624,7 +1677,9 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
 					$.bridget(NAMESPACE_MAIN, Slider);
 					autoRegisterNamespace = NAMESPACE_MAIN;
 				} else {
-					window.console.warn("bootstrap-slider.js - WARNING: $.fn.slider namespace is already bound. Use the $.fn.bootstrapSlider namespace instead.");
+					if (windowIsDefined) {
+						window.console.warn("bootstrap-slider.js - WARNING: $.fn.slider namespace is already bound. Use the $.fn.bootstrapSlider namespace instead.");
+					}
 					autoRegisterNamespace = NAMESPACE_ALTERNATE;
 				}
 				$.bridget(NAMESPACE_ALTERNATE, Slider);

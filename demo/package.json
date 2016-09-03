@@ -8,9 +8,10 @@
     "dev:server": "tmp/bundle.js"
   },
   "scripts": {
-    "build": "run-s clean dist build:clean-client",
-    "run": "run-s dev",
+    "build": "run-s clean bower:install dist build:clean-client",
+    "run": "run-s bower:install dev",
     "serve_dist": "http-server ./dist",
+    "bower:install": "bower install",
     "clean:dist": "rimraf dist",
     "clean:js": "rimraf public/js/main*.js && rimraf public/js/app.js && rimraf public/js/plugins.js && rimraf public/js/*.map",
     "clean:css": "rimraf public/css/main*.css && rimraf public/css/app*.css && rimraf public/css/*.map",
@@ -88,6 +89,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "http-server": "0.9.0",
+    "bower": "1.7.9",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
