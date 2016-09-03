@@ -8,6 +8,9 @@
     "dev:server": "tmp/bundle.js"
   },
   "scripts": {
+    "build": "run-s clean dist build:clean-client",
+    "run": "run-s dev",
+    "serve_dist": "http-server ./dist",
     "clean:dist": "rimraf dist",
     "clean:js": "rimraf public/js/main*.js && rimraf public/js/app.js && rimraf public/js/plugins.js && rimraf public/js/*.map",
     "clean:css": "rimraf public/css/main*.css && rimraf public/css/app*.css && rimraf public/css/*.map",
@@ -27,6 +30,7 @@
     "dev:dist": "run-p dev dist:watch",
     "build:server": "cross-env NO_OUTPUT_PATH=true NODE_ENV=production webpack --progress --colors --display-error-details --config tools/webpack.server.js",
     "build:client": "cross-env EXTRACT_TEXT_PLUGIN=true webpack --progress --colors --display-error-details --config tools/webpack.client.js",
+    "build:clean-client": "rimraf dist/bower_components/blueimp-gallery",
     "bundle:server": "run-s clean:tmp clean:server build:server",
     "bundle:client": "run-s clean:css clean:js clean:fonts build:client",
     "prod:server": "cross-env NODE_ENV=production node server.js",
@@ -38,6 +42,9 @@
     "dist:watch": "run-s bundle:client && node tools/watch-dist.js",
     "test": "mocha --compilers :./tools/babel-setup.js --recursive --watch ./test/*.js",
     "start": "node server.js"
+  },
+  "engines": {
+    "node": "6.5.0"
   },
   "author": "Sketchpixy <support@sketchpixy.com>",
   "devDependencies": {
@@ -80,6 +87,7 @@
     "uglify-loader": "^1.3.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
+    "http-server": "0.9.0",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {

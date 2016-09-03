@@ -10,6 +10,8 @@ l20n.initializeLocales({
   'default': 'en-US'
 });
 
+Modernizr.history=false;
+
 render(routes, () => {
   l20n.ready();
 });

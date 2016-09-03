@@ -172,8 +172,10 @@ const combinedRoutes = (
 
 export default (
   <Route>
-    <Route path='/' component={Homepage} />
-
+    <Route path="/" component={App}>
+      <IndexRoute component={Dashboard}/>
+    </Route>
+    
     <Route path='/ltr'>
       {combinedRoutes}
     </Route>
