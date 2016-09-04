@@ -31,7 +31,7 @@
     "dev:dist": "run-p dev dist:watch",
     "build:server": "cross-env NO_OUTPUT_PATH=true NODE_ENV=production webpack --progress --colors --display-error-details --config tools/webpack.server.js",
     "build:client": "cross-env EXTRACT_TEXT_PLUGIN=true webpack --progress --colors --display-error-details --config tools/webpack.client.js",
-    "build:clean-client": "rimraf dist/bower_components/blueimp-gallery",
+    "build:clean-client": "rimraf dist/bower_components",
     "bundle:server": "run-s clean:tmp clean:server build:server",
     "bundle:client": "run-s clean:css clean:js clean:fonts build:client",
     "prod:server": "cross-env NODE_ENV=production node server.js",
@@ -90,6 +90,7 @@
     "webpack": "^1.13.1",
     "http-server": "0.9.0",
     "bower": "1.7.9",
+    "replace": "0.3.0",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
