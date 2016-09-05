@@ -139,6 +139,7 @@ class ApplicationSidebar extends React.Component {
                       <span className='name'>Documentation</span>
                     </a>
                   </li>
+                  <div className='sidebar-header'>V: 000000</div>
                 </SidebarNav>
                 <br />
                 <br />

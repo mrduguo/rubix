@@ -93,6 +93,8 @@
     "bower": "1.7.9",
     "replace": "0.3.0",
     "base64-img": "1.0.3",
+    "moment": "2.14.1",
+    "git-rev": "0.2.1",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {

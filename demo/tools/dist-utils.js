@@ -5,6 +5,8 @@ var path = require('path');
 var rimraf = require('rimraf');
 var replace = require('replace');
 var base64Img = require('base64-img');
+var moment = require('moment');
+var git = require('git-rev')
 
 var publicPath = path.join(process.cwd(), 'public');
 var distPath = path.join(process.cwd(), 'dist');
@@ -35,8 +37,17 @@ module.exports = function(callback) {
       fs.writeFileSync(destIndexPath, html + '\n');
 
 
-
       console.log('Replacing!');
+      git.short(function (gitCommit) {
+        var timestamp=moment().format("YYMMDD-HHmmss")
+        replace({
+          regex: '000000',
+          replacement: timestamp+'-'+gitCommit,
+          paths: [path.join(distPath, 'js/app.js')],
+          recursive: true,
+          silent: false,
+        });
+      })
       replace({
         regex: '"/locales/"',
         replacement: '"locales/"',
