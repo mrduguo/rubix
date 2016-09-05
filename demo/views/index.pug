@@ -5,8 +5,6 @@ block pace-loader
   link(rel="stylesheet", href="css/pace.css")
   script(type="text/javascript", src="js/pace.js")
 
-block header
-  != app_stylesheets
 
 block content
   div.pace-big-bg
@@ -27,4 +25,5 @@ block scripts
   != app_scripts
 
 block stylesheets
+  link(rel="stylesheet", href="css/main.css")
   link(rel="stylesheet", href="css/codemirror-ambiance.css")

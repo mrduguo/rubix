@@ -30,8 +30,7 @@ module.exports = function(callback) {
       });
 
       var html = fn({
-        app_scripts: "\n    <script src='js/plugins.js'></script>\n    <script src='js/app.js'></script>",
-        app_stylesheets: "\n    <link rel='stylesheet' href='css/main.css' />"
+        app_scripts: "\n    <script src='js/plugins.js'></script>\n    <script src='js/app.js'></script>"
       });
 
       fs.writeFileSync(destIndexPath, html + '\n');
