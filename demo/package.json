@@ -8,8 +8,8 @@
     "dev:server": "tmp/bundle.js"
   },
   "scripts": {
-    "build": "run-s clean bower:install dist build:clean-client",
-    "run": "run-s bower:install dev",
+    "build": "run-s clean dist build:clean-client",
+    "run": "run-s dev",
     "serve_dist": "http-server ./dist",
     "bower:install": "bower install",
     "clean:dist": "rimraf dist",
@@ -42,7 +42,8 @@
     "dist": "cross-env NODE_ENV=production run-s bundle:client && node tools/create-dist.js",
     "dist:watch": "run-s bundle:client && node tools/watch-dist.js",
     "test": "mocha --compilers :./tools/babel-setup.js --recursive --watch ./test/*.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "run-s bower:install"
   },
   "engines": {
     "node": "6.5.0"
@@ -91,6 +92,7 @@
     "http-server": "0.9.0",
     "bower": "1.7.9",
     "replace": "0.3.0",
+    "base64-img": "1.0.3",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {

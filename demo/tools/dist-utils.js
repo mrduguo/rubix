@@ -4,15 +4,15 @@ var pug = require('pug');
 var path = require('path');
 var rimraf = require('rimraf');
 var replace = require('replace');
+var base64Img = require('base64-img');
 
 var publicPath = path.join(process.cwd(), 'public');
 var distPath = path.join(process.cwd(), 'dist');
 var indexPath = path.join(process.cwd(), 'views', 'index.pug');
 var destIndexPath = path.join(distPath, 'index.html');
-var destIndexRTLPath = path.join(distPath, 'index-rtl.html');
 var jsPath = path.join(distPath, 'js');
 var cssPath = path.join(distPath, 'css');
-var jsAppPath = path.join(jsPath, 'app.js');
+var splashImgPath = path.join(distPath, 'imgs/common/splash-screen.jpg');
 
 module.exports = function(callback) {
   rimraf(distPath, function() {
@@ -32,13 +32,7 @@ module.exports = function(callback) {
         app_stylesheets: "\n    <link rel='stylesheet' href='css/main.css' />"
       });
 
-      var htmlRTL = fn({
-        app_scripts: "\n    <script src='js/plugins.js'></script>\n    <script src='js/app.js'></script>",
-        app_stylesheets: "\n    <link rel='stylesheet' href='css/main-rtl.css' />"
-      });
-
       fs.writeFileSync(destIndexPath, html + '\n');
-      fs.writeFileSync(destIndexRTLPath, htmlRTL + '\n');
 
 
 
@@ -72,7 +66,38 @@ module.exports = function(callback) {
         silent: false,
       });
 
+      fs.readFile(path.join(distPath, 'js/pace.js'), 'utf8', function (err,data) {
+        replace({
+          regex: '<script type="text/javascript" src="js/pace.js"></script>',
+          replacement: '<script type="text/javascript">'+data+'</script>',
+          paths: [destIndexPath],
+          recursive: true,
+          silent: false,
+        });
+      });
+
+      fs.readFile(path.join(distPath, 'css/pace.css'), 'utf8', function (err,data) {
+        replace({
+          regex: '<link rel="stylesheet" href="css/pace.css">',
+          replacement: '<style>'+data+'</style>',
+          paths: [destIndexPath],
+          recursive: true,
+          silent: false,
+        });
+      });
+
+      base64Img.base64(splashImgPath, function(err, data) {
+        replace({
+          regex: '../imgs/common/splash-screen.jpg',
+          replacement: data,
+          paths: [destIndexPath],
+          recursive: true,
+          silent: false,
+        });
+      });
+
       console.log('Done!');
+
 
       if (callback) callback();
     })
