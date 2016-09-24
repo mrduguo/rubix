@@ -639,7 +639,7 @@ class HeaderNavigation extends React.Component {
           <NotificationsMenu />
           <RssMenu />
         </Nav>
-        <Nav>
+        <Nav className='hidden-xs'>
           <NavItem className='logout' href='#' onClick={::this.handleLogout}>
             <Icon bundle='fontello' glyph='off-1' />
           </NavItem>
