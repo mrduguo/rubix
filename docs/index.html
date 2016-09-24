@@ -31,13 +31,6 @@
     <meta name="msapplication-TileColor" content="#E76049">
     <meta name="msapplication-TileImage" content="favicons/mstile-144x144.png">
 
-    <script>
-      var paceOptions = {
-        elements: {
-          selectors: ['#footer-container']
-        }
-      }
-    </script>
     <style>
       body {
         font-family: 'Roboto', sans-serif;
@@ -1322,9 +1315,6 @@
         }
       };
       if (typeof define === 'function' && define.amd) {
-        define(['pace'], function () {
-          return Pace;
-        });
       } else if (typeof exports === 'object') {
         module.exports = Pace;
       } else {
@@ -1332,6 +1322,9 @@
           Pace.start();
         }
       }
+      define(['pace'], function () {
+          return Pace;
+        });
     }).call(this);
     </script>
   </head>
