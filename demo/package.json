@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "run-s clean dist build:clean-client",
-    "run": "run-s dev",
+    "start": "run-s dev",
     "serve_dist": "http-server ./dist",
     "clean:dist": "rimraf dist",
     "clean:js": "rimraf public/js/main*.js && rimraf public/js/app.js && rimraf public/js/plugins.js && rimraf public/js/*.map",
